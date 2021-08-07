@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/gergusber/ChallangeNode#readme",
   "devDependencies": {
+    "@types/sequelize": "^4.28.10",
     "nodemon": "^2.0.12",
     "sequelize-cli": "^6.2.0"
   },
