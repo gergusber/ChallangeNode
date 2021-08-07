@@ -1,4 +1,5 @@
-const { product } = require("../models");
+const { product, product_status } = require("../models");
+const { validationResult } = require("express-validator");
 
 exports.getProducts = async (req, res, next) => {
   try {
@@ -29,6 +30,47 @@ exports.getProductsByName = async (req, res, next) => {
     res.status(200).json({
       message: "Fetched posts succesfully",
       posts: products,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+exports.createProduct = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("validation Failed, enter data is incorrect");
+    error.statusCode = 422;
+    throw error;
+  }
+
+  const name = req.body.name;
+  const merchant = req.body.merchant_id;
+  const price = req.body.price;
+  const productStatus = req.body.product_statusId;
+  const status = product_status.findOne({ where: { id: productStatus } });
+
+  if (!status) {
+    const error = new Error("validation Failed,Status is not correct");
+    error.statusCode = 422;
+    throw error;
+  }
+
+  try {
+    const prod = new product({
+      name: name,
+      merchant_id: merchant,
+      price: price,
+      product_statusId: productStatus,
+    });
+    const Product = await prod.save();
+
+    res.status(201).json({
+      message: "Product created successfully!",
+      Product,
     });
   } catch (err) {
     if (!err.statusCode) {
