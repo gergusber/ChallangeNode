@@ -19,10 +19,8 @@ exports.getProducts = async (req, res, next) => {
 
 exports.getProductsByName = async (req, res, next) => {
   const prdname = req.params.name;
-  console.log("PROD NAME", prdname);
   try {
     const products = await product.findOne({ where: { name: prdname } });
-    console.log("pRODUCTS", products);
     if (!products) {
       const error = new Error("No Product was found with this name");
       error.statusCode = 200;
