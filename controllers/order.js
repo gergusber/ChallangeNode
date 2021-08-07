@@ -1,10 +1,10 @@
 const { order_items, products } = require("../models");
-const product = require("../models/product");
+const items = require("../models/product");
 
 exports.geOrdersById = async (req, res, next) => {
   let orderId = req.params.orderId;
   try {
-    const orders = await product.findOne({ where: { id: orderId } });
+    const orders = await items.findOne({ where: { id: orderId } });
     res.status(200).json({
       message: "Fetched Order_Item succesfully",
       posts: orders,
@@ -39,8 +39,9 @@ exports.getAllProductsFromOrder = async (req, res, next) => {
   try {
     const orderItems = await order_items.findAll({
       where: { orderId: orderId },
+      include: "products",
     });
-    console.log("orders", orderItems.posts);
+
     if (!orderItems) {
       const error = new Error("No Order was found with this Id");
       error.statusCode = 200;
@@ -49,7 +50,7 @@ exports.getAllProductsFromOrder = async (req, res, next) => {
 
     res.status(200).json({
       message: "Fetched posts succesfully",
-      posts: orderItems,
+      orderItems,
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -58,23 +59,3 @@ exports.getAllProductsFromOrder = async (req, res, next) => {
     next(err);
   }
 };
-
-// Cart.getCart((cart) => {
-//     Product.fetchAll((products) => {
-//       const cartProducts = [];
-//       for (product of products) {
-//         const cartProductData = cart.products.find(
-//           (prod) => prod.id === product.id
-//         );
-//         if (cartProductData) {
-//           cartProducts.push({ productData: product, qty: cartProductData.qty });
-//         }
-//       }
-//       res.render("shop/cart", {
-//         path: "/cart",
-//         pageTitle: "Your Cart",
-//         products: cartProducts,
-//       });
-//     });
-//   });
-// };
