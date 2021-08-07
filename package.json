@@ -1,0 +1,19 @@
+{
+  "name": "challangenode",
+  "version": "1.0.0",
+  "description": "- The task is based on the next database structure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gergusber/ChallangeNode.git"
+  },
+  "author": "German",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gergusber/ChallangeNode/issues"
+  },
+  "homepage": "https://github.com/gergusber/ChallangeNode#readme"
+}
