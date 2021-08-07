@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const productRouter = require("./routes/product");
+const ordersRouter = require("./routes/order");
 
 app.use(express.json());
 app.use(
@@ -17,10 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/product", productRouter);
-
-app.get("/", (req, res) => {
-  res.send("This is root!");
-});
+app.use("/order", ordersRouter);
 
 app.use((err, req, res, next) => {
   console.log(err);
