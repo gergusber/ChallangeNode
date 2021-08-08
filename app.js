@@ -3,6 +3,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const productRouter = require("./routes/product");
 const ordersRouter = require("./routes/order");
+const cron = require("node-cron");
+const notionClietn = require("./notion/client");
 
 app.use(express.json());
 app.use(
@@ -31,6 +33,12 @@ app.use((err, req, res, next) => {
   });
 });
 const server = require("http").Server(app);
+
+// cron.schedule("* * * * *", async () => {
+//   console.log("Task is running every minute " + new Date());
+//   // Initializing a client
+//   notionClietn.add_Data();
+// });
 
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);

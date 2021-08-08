@@ -3,6 +3,7 @@ const { expect } = chai;
 const sinon = require("sinon");
 const { server } = require("../app");
 const request = require("supertest");
+const product = require("../models/product");
 
 describe("product controller ", async (done) => {
   // before(function (done) {
@@ -47,8 +48,8 @@ describe("product controller ", async (done) => {
       totalItems: 3,
     };
     const { body, status } = await request(server).get("/product");
-
     expect(status).to.equal(200);
     expect(body).to.deep.include(returnProducts);
+    done();
   });
 });

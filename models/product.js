@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasOne(models.product_status, {
         as: "product_status",
-        foreignKey: "product_statusId",
+        foreignKey: "id",
       });
       this.belongsToMany(models.order_items, {
         as: "product",
