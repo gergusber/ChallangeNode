@@ -22,12 +22,13 @@ We’d like you to create a project using Nodejs, Express for routing and Sequel
 - [x]Unit tests for the API endpoints
 
 - Proces:
-
-Dev: npm start
+- Dev run: : npm start
+  This will generate the db, apply the migrations then the seed
 
 1.  npx sequelize-cli db:create
 2.  npx sequelize-cli db:migrate
 3.  npx sequelize-cli db:seed:all
+4.  npm start
 
-Test: run $ npm test
-This will generate the db, apply the migrations then the seed
+- Test run: npm test
+  This will generate the db, apply the migrations then the seed

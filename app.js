@@ -23,7 +23,6 @@ app.use("/product", productRouter);
 app.use("/order", ordersRouter);
 
 app.use((err, req, res, next) => {
-  console.log(err);
   const status = err.statusCode || 500;
   const message = err.message;
   const data = err.data;

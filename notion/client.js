@@ -14,7 +14,7 @@ const getDatabase = async () => {
   });
 
   // this console.log is just so you can see what we're getting here
-  console.log(responseResults);
+
   return responseResults;
 };
 const add_Data = async () => {
@@ -95,7 +95,6 @@ async function createPageInDatabase(databaseId) {
 
   // Finally the request to create a page.
   const response = await notion.pages.create(page);
-  console.log(response);
 }
 
 const newEntryToDatabase = async function (id, name, orderId) {

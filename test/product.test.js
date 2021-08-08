@@ -4,6 +4,7 @@ const sinon = require("sinon");
 const { server } = require("../app");
 const request = require("supertest");
 const product = require("../models/product");
+const productcontroller = require("../controllers/product");
 
 describe("product controller ", async (done) => {
   // before(function (done) {
@@ -69,24 +70,35 @@ describe("product controller ", async (done) => {
   });
 
   //I DONT UNDESTAND WHY THIS ISNT WORKING
-  // it("CreateProduct - Create one product - returns ok", async () => {
-  //   const returnProduct = {
-  //     message: "Product created successfully!",
-  //     Product: {
-  //       name: "Manny",
-  //       merchant_id: "Something",
-  //       price: 3,
-  //       product_statusId: 1,
-  //     },
-  //   };
-  //   const { status, body } = await request(server).post("/product").send({
-  //     name: "Manny",
-  //     merchant_id: "Something",
-  //     price: 3,
-  //     product_statusId: 1,
-  //   });
-  //   console.log("post response ", res);
-  //   expect(status).to.equal(201);
-  //   expect(body).to.deep.include(returnProduct);
-  // });
+  it("CreateProduct - Create one product - returns ok", async () => {
+    const returnProduct = {
+      message: "Product created successfully!",
+      Product: {
+        name: "Manny",
+        merchant_id: "Something",
+        price: 3,
+        product_statusId: 1,
+      },
+    };
+    var req = {
+      name: "Manny",
+      merchant_id: "Something",
+      price: 3,
+      product_statusId: 1,
+    };
+    const res = {
+      status: () => {
+        return this;
+      },
+      json: function () {},
+    };
+    productcontroller
+      .createProduct(req, res, () => {})
+      .then(() => {
+        expect(res.status).to.be.equal(201);
+        expect(res.body).to.be.equal(returnProduct);
+
+        done();
+      });
+  });
 });

@@ -2,14 +2,16 @@ const { order_items, product, order } = require("../models");
 const items = require("../models/product");
 const { user } = require("../models");
 const { validationResult } = require("express-validator");
-// const product = require("../models/product");
 
 exports.geOrdersById = async (req, res, next) => {
   let orderId = req.params.orderId;
   try {
-    const orders = await order.findOne({ where: { id: orderId } });
+    const orders = await order.findOne({
+      attributes: ["id", "status", "userId"],
+      where: { id: orderId },
+    });
     res.status(200).json({
-      message: "Fetched Order_Item succesfully",
+      message: "Fetched Orders succesfully",
       orders,
     });
   } catch (err) {
@@ -41,9 +43,9 @@ exports.getAllProductsFromOrder = async (req, res, next) => {
   let orderId = req.params.orderId;
   try {
     const orderItems = await order_items.findAll({
-      attributes: ["products.id"],
+      attributes: ["order_items.id"],
       where: { orderId: orderId },
-      include: "products",
+      include: ["products", "orders"],
     });
 
     if (!orderItems) {
@@ -51,10 +53,10 @@ exports.getAllProductsFromOrder = async (req, res, next) => {
       error.statusCode = 200;
       throw error;
     }
-    console.log(orderItems);
+
     res.status(200).json({
       message: "Fetched Products succesfully",
-      products: orderItems,
+      orderItems,
     });
   } catch (err) {
     if (!err.statusCode) {
