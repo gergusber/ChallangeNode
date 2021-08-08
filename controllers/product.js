@@ -51,7 +51,7 @@ exports.createProduct = async (req, res, next) => {
   const merchant = req.body.merchant_id;
   const price = req.body.price;
   const productStatus = req.body.product_statusId;
-  const status = product_status.findOne({ where: { id: productStatus } });
+  const status = await product_status.findOne({ where: { id: productStatus } });
 
   if (!status) {
     const error = new Error("validation Failed,Status is not correct");
@@ -64,7 +64,7 @@ exports.createProduct = async (req, res, next) => {
       name: name,
       merchant_id: merchant,
       price: price,
-      product_statusId: productStatus,
+      product_statusId: status.id,
     });
     const Product = await prod.save();
 

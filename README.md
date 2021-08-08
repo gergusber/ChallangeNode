@@ -11,9 +11,9 @@ We’d like you to create a project using Nodejs, Express for routing and Sequel
   - [x]REST API endpoints allowing to;
     - [x]List all Products
     - [x]Search a product by name
-    - []List all products of a chosen order
-    - []Create a product
-    - []Create an order
+    - [x]List all products of a chosen order
+    - [x]Create a product
+    - [x]Create an order
     - []Add a product to an order
 
 - []We also need to have a scheduled function that would be executed every Monday at 7am UTC and create a simple Page in Notion using their API https://developers.notion.com/
