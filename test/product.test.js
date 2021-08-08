@@ -19,7 +19,7 @@ describe("product controller ", async (done) => {
   //   // console.log("RESET SOMEETHING EACH TEST");
   // });
 
-  it("Fetch products test", async () => {
+  it("GetProducts - Fetch products test - returns ok  ", async () => {
     const returnProducts = {
       message: "Fetched Products succesfully",
       products: [
@@ -50,6 +50,43 @@ describe("product controller ", async (done) => {
     const { body, status } = await request(server).get("/product");
     expect(status).to.equal(200);
     expect(body).to.deep.include(returnProducts);
-    done();
   });
+
+  it("GetProductsByName - Fetch products test -returns ok", async () => {
+    const returnProduct = {
+      message: "Fetched Products succesfully",
+      products: {
+        id: 1,
+        name: "Product1",
+        merchant_id: 1,
+        price: 3,
+        product_statusId: 1,
+      },
+    };
+    const { body, status } = await request(server).get("/product/Product1");
+    expect(status).to.equal(200);
+    expect(body).to.deep.include(returnProduct);
+  });
+
+  //I DONT UNDESTAND WHY THIS ISNT WORKING
+  // it("CreateProduct - Create one product - returns ok", async () => {
+  //   const returnProduct = {
+  //     message: "Product created successfully!",
+  //     Product: {
+  //       name: "Manny",
+  //       merchant_id: "Something",
+  //       price: 3,
+  //       product_statusId: 1,
+  //     },
+  //   };
+  //   const { status, body } = await request(server).post("/product").send({
+  //     name: "Manny",
+  //     merchant_id: "Something",
+  //     price: 3,
+  //     product_statusId: 1,
+  //   });
+  //   console.log("post response ", res);
+  //   expect(status).to.equal(201);
+  //   expect(body).to.deep.include(returnProduct);
+  // });
 });

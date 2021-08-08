@@ -9,8 +9,6 @@ COPY package.json .
 
 RUN npm install
 
-
-
 #Asignt the WorkinDir and we pass the workdir to the App Directory from the docker
 COPY . .
 
@@ -27,6 +25,6 @@ EXPOSE $PORT
 CMD [ "npm", "start" ]
 
 # Primero
-# docker build -t node:udemy .
+# docker build -t node:test .
 # Segundo
-# docker run -d -p 3001:8000 --env PORT=8000 --rm --name node-udemy-app -v nodeUdemy:/app/nodeUdemy -v data:/app/data -v "C:\Proyectos\ChallangeNode:/app:ro" -v /app/data -v /app/node_modules  node:udemy
+# docker run -d -p 3000:8080 --env PORT=8080 --rm --name node-app -v node:/app/node -v data:/app/data -v "C:\Proyectos\ChallangeNode:/app:ro" -v /app/data -v /app/node_modules  node:test

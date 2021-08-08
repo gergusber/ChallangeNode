@@ -23,15 +23,19 @@ exports.getProducts = async (req, res, next) => {
 exports.getProductsByName = async (req, res, next) => {
   const prdname = req.params.name;
   try {
-    const products = await product.findOne({ where: { name: prdname } });
+    const products = await product.findOne({
+      attributes: ["id", "name", "merchant_id", "price", "product_statusId"],
+      where: { name: prdname },
+    });
+
     if (!products) {
       const error = new Error("No Product was found with this name");
       error.statusCode = 200;
       throw error;
     }
     res.status(200).json({
-      message: "Fetched posts succesfully",
-      posts: products,
+      message: "Fetched Products succesfully",
+      products,
     });
   } catch (err) {
     if (!err.statusCode) {
