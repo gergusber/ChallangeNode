@@ -33,7 +33,7 @@ app.use((err, req, res, next) => {
 });
 const server = require("http").Server(app);
 
-// cron.schedule("* * * * *", async () => {
+// cron.schedule("0 7 0  ? * MON *", async () => {
 //   console.log("Task is running every minute " + new Date());
 //   // Initializing a client
 //   notionClietn.add_Data();
