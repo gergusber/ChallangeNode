@@ -1,15 +1,16 @@
-const { order_items, products, order } = require("../models");
+const { order_items, product, order } = require("../models");
 const items = require("../models/product");
 const { user } = require("../models");
 const { validationResult } = require("express-validator");
+// const product = require("../models/product");
 
 exports.geOrdersById = async (req, res, next) => {
   let orderId = req.params.orderId;
   try {
-    const orders = await items.findOne({ where: { id: orderId } });
+    const orders = await order.findOne({ where: { id: orderId } });
     res.status(200).json({
       message: "Fetched Order_Item succesfully",
-      posts: orders,
+      orders,
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -73,11 +74,10 @@ exports.createOrder = async (req, res, next) => {
 
   const status = req.body.status;
   const userId = req.body.userId;
-
   const userInsert = await user.findOne({ where: { id: userId } });
 
   if (!userInsert) {
-    const error = new Error("validation Failed,Status is not correct");
+    const error = new Error("validation Failed, User is not correct");
     error.statusCode = 422;
     throw error;
   }
@@ -88,6 +88,53 @@ exports.createOrder = async (req, res, next) => {
       status: status,
     });
     const orderCreated = await orderToAdd.save();
+
+    res.status(201).json({
+      message: "Product created successfully!",
+      order: orderCreated,
+    });
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
+exports.addProductToOrder = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const error = new Error("validation Failed, enter data is incorrect");
+    error.statusCode = 422;
+    throw error;
+  }
+  try {
+    let orderI = req.params.orderId;
+    let productId = req.body.productId;
+    let quantity = req.body.quantity;
+
+    const orderToAddProd = await order.findAll({
+      where: { id: orderI },
+    });
+    if (!orderToAddProd) {
+      const error = new Error("No Order was found with this Id");
+      error.statusCode = 200;
+      throw error;
+    }
+
+    const productsFromBd = await product.findOne({ where: { id: productId } });
+    if (!productsFromBd) {
+      const error = new Error("validation Failed, Product is not correct");
+      error.statusCode = 422;
+      throw error;
+    }
+
+    const orderItems = new order_items({
+      productId: productId,
+      orderId: orderI,
+      quantity: quantity,
+    });
+    const orderCreated = await orderItems.save();
 
     res.status(201).json({
       message: "Product created successfully!",

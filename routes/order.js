@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 const ordersController = require("../controllers/order");
 
 router.get("/", ordersController.getAllOrders);
@@ -20,5 +20,14 @@ router.post(
     body("userId").isInt().withMessage("Please enter a valid user "),
   ],
   ordersController.createOrder
+);
+
+router.put(
+  "/:orderId/product",
+  [
+    body("productId").isInt().withMessage("Please enter a valid productId "),
+    body("quantity").isInt().withMessage("Please enter a valid quantity "),
+  ],
+  ordersController.addProductToOrder
 );
 module.exports = router;
