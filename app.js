@@ -30,7 +30,13 @@ app.use((err, req, res, next) => {
     data: data,
   });
 });
+const server = require("http").Server(app);
 
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);
 });
+
+module.exports = {
+  app,
+  server,
+};

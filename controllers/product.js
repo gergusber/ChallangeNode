@@ -3,11 +3,13 @@ const { validationResult } = require("express-validator");
 
 exports.getProducts = async (req, res, next) => {
   try {
-    const products = await product.findAll();
+    const products = await product.findAll({
+      attributes: ["id", "name", "merchant_id", "price", "product_statusId"],
+    });
     const totalItems = await product.count();
     res.status(200).json({
-      message: "Fetched posts succesfully",
-      posts: products,
+      message: "Fetched Products succesfully",
+      products,
       totalItems: totalItems,
     });
   } catch (err) {
