@@ -28,7 +28,7 @@ exports.getAllOrders = async (req, res, next) => {
     const totalItems = await order_items.count();
     res.status(200).json({
       message: "Fetched all Orders succesfully",
-      posts: orders,
+      orders,
       totalItems: totalItems,
     });
   } catch (err) {

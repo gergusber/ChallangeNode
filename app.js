@@ -31,14 +31,18 @@ app.use((err, req, res, next) => {
     data: data,
   });
 });
-const server = require("http").Server(app);
 
-// cron.schedule("0 7 0  ? * MON *", async () => {
+cron.schedule("0 7 0  ? * MON *", async () => {
+  console.log("Task is running every minute " + new Date());
+var somehting = notionClietn.createPageInDatabase();
+console.log(somehting);
+});
+
+// cron.schedule("* * * * **", async () => {
 //   console.log("Task is running every minute " + new Date());
-//   // Initializing a client
-//   notionClietn.add_Data();
+//   var somehting = notionClietn.createPageInDatabase();
+//   console.log(somehting);
 // });
-
 app.listen(PORT, () => {
   console.log(`Express server listening on port ${PORT}`);
 });
